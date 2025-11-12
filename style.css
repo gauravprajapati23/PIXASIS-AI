@@ -310,6 +310,8 @@ h2 {
     position: relative;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
     text-align: left; /* Modal ke text ko left-align karein */
+    max-height: 85vh;  /* Modal ki height screen ke 85% se zyada na ho */
+    overflow-y: auto;  /* Agar content zyada ho toh scrollbar dikhayein */
 }
 
 .close-btn {
