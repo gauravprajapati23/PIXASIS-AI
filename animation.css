@@ -108,6 +108,9 @@
 .modal-content .info-card:nth-of-type(3) {
     animation-delay: 0.7s;
 }
+.modal-content .info-card:nth-of-type(4) {
+    animation-delay: 0.9s;
+}
 
 
 /* --- 4. Micro-Interactions & Polish --- */
