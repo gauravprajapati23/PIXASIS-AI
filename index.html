@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Caption Generator</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Image Caption Generator</h2>
+        <p>Apni image upload karein aur Gemini AI se caption paayein.</p>
+
+        <div class="uploader">
+            <input type="file" id="image-upload" accept="image/png, image/jpeg">
+            <label for="image-upload">Image Chunein</label>
+        </div>
+
+        <div class="preview">
+            <img id="preview-image" src="" alt="Aapki image yahaan dikhegi">
+        </div>
+
+        <button id="generate-btn">Caption Generate Karein</button>
+
+        <div class="result" id="caption-output">
+            <p>Aapka caption yahaan generate hoga...</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

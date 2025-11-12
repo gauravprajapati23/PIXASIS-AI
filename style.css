@@ -1,0 +1,95 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 90%;
+    max-width: 500px;
+}
+
+h2 {
+    margin-top: 0;
+    color: #333;
+}
+
+.uploader {
+    margin: 20px 0;
+}
+
+/* File input ko hide karein */
+#image-upload {
+    display: none;
+}
+
+/* File input ke label ko button jaisa banayein */
+label[for="image-upload"] {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+label[for="image-upload"]:hover {
+    background-color: #0056b3;
+}
+
+.preview {
+    margin-top: 20px;
+    min-height: 100px; /* Taki khali hone par bhi jagah le */
+}
+
+#preview-image {
+    max-width: 100%;
+    max-height: 300px;
+    border-radius: 8px;
+    border: 2px solid #ddd;
+}
+
+#generate-btn {
+    background-color: #28a745;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 20px;
+    width: 100%;
+    transition: background-color 0.3s;
+}
+
+#generate-btn:hover {
+    background-color: #218838;
+}
+
+/* Loading state */
+#generate-btn.loading {
+    background-color: #555;
+    cursor: not-allowed;
+}
+
+.result {
+    margin-top: 20px;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: left;
+    min-height: 50px;
+    line-height: 1.6;
+}
