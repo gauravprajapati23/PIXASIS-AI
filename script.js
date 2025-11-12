@@ -1,54 +1,84 @@
-// AApni NAYI (NEW) API key ko yahaan "" ke beech mein paste karein
+// ==========================================================
+// ZAROORI SETTINGS
+// ==========================================================
+
+// 1. Apni NAYI API key yahaan daalein
 const API_KEY = "AIzaSyCG8i_febSjH53bImbITQxFayvG-JzcSRI";
 
-// HTML elements ko select karein
+// 2. Model ka naam
+const MODEL_NAME = "gemini-2.5-flash"; 
+
+// ==========================================================
+// HTML Elements
+// ==========================================================
+const getStartedBtn = document.getElementById('get-started-btn');
+const homeSection = document.getElementById('home-section');
+const uploaderSection = document.getElementById('uploader-section');
 const imageUpload = document.getElementById('image-upload');
 const previewImage = document.getElementById('preview-image');
 const generateBtn = document.getElementById('generate-btn');
-const captionOutput = document.getElementById('caption-output');
+const fileName = document.getElementById('file-name');
+const previewContainer = document.querySelector('.preview');
+const resultContainer = document.querySelector('.result');
+const captionText = document.getElementById('caption-text');
+const promptInput = document.getElementById('prompt-input'); 
 
-let uploadedFile = null;
+// --- NAYE MODAL KE ELEMENTS ---
+const infoButton = document.getElementById('info-button');
+const infoModal = document.getElementById('info-modal');
+const closeModal = document.getElementById('close-modal');
 
-// Jab image upload ho, toh preview dikhayein
+// ==========================================================
+// Event Listeners
+// ==========================================================
+
+// 1. "Get Started" Button (Show/Hide Logic)
+getStartedBtn.addEventListener('click', () => {
+    homeSection.style.display = 'none';
+    uploaderSection.style.display = 'block';
+});
+
+// 2. Image Upload Logic
 imageUpload.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
         uploadedFile = file;
+        fileName.textContent = file.name; 
+        
         const reader = new FileReader();
         reader.onload = (e) => {
             previewImage.src = e.target.result;
+            previewContainer.style.display = 'block';
         };
         reader.readAsDataURL(file);
+        
+        resultContainer.style.display = 'none';
+        captionText.textContent = "Your generated caption will appear here...";
     }
 });
 
-// Generate button par click hone par
+// 3. Generate Button (API Call)
 generateBtn.addEventListener('click', async () => {
     if (!uploadedFile) {
-        alert("Pehle ek image upload karein!");
+        alert("Please upload an image first!");
         return;
     }
 
     if (API_KEY === "AAPKI_NAYI_API_KEY_YAHAN_DAALEIN") {
-        alert("ERROR: Likhahua code ('script.js') mein apni API Key daalein!");
+        alert("ERROR: Please add your API Key to the 'script.js' file!");
         return;
     }
 
-    // Button ko loading state mein daalein
-    generateBtn.disabled = true;
-    generateBtn.textContent = "Soch raha hoon...";
-    generateBtn.classList.add('loading');
-    captionOutput.innerHTML = "<p>Image ko process kar raha hoon...</p>";
+    setLoading(true);
+    captionText.textContent = "Generating caption... Please wait.";
+    resultContainer.style.display = 'block';
 
     try {
-        // Step 1: Image ko Base64 format mein convert karein
         const base64Image = await fileToBase64(uploadedFile);
-        
-        // ==========================================================
-        // YAHAN PAR Galti Thi (FIXED)
-        // Maine `https://generativelanguage.googleapis.com...` poora URL daal diya hai
-        // ==========================================================
-        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${API_KEY}`, {
+        const userPrompt = promptInput.value;
+        const finalPrompt = userPrompt || "Describe this image in a creative and engaging way for social media.";
+
+        const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL_NAME}:generateContent?key=${API_KEY}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -57,14 +87,11 @@ generateBtn.addEventListener('click', async () => {
                 "contents": [
                     {
                         "parts": [
-                            // Pehla part: Hamara text prompt
-                            { "text": "Is image ko dekho aur iske liye ek short, creative caption (Hindi ya Hinglish mein) banao." },
-                            
-                            // Doosra part: Hamari image
+                            { "text": finalPrompt }, 
                             {
                                 "inlineData": {
-                                    "mimeType": uploadedFile.type, // e.g., "image/jpeg"
-                                    "data": base64Image // base64 string
+                                    "mimeType": uploadedFile.type,
+                                    "data": base64Image
                                 }
                             }
                         ]
@@ -74,35 +101,60 @@ generateBtn.addEventListener('click', async () => {
         });
 
         if (!response.ok) {
-            // Ab yeh poora error dikhayega, jaise 400 ya 403
             const errorData = await response.json();
-            throw new Error(`API call fail ho gayi: ${response.status} - ${errorData.error.message}`);
+            throw new Error(`API call failed: ${response.status} - ${errorData.error.message}`);
         }
 
         const data = await response.json();
-        
-        // Step 3: Result ko display karein
         const caption = data.candidates[0].content.parts[0].text;
-        captionOutput.innerHTML = `<p>${caption}</p>`;
+        
+        captionText.textContent = caption;
 
     } catch (error) {
-        console.error(error); // Poora error console mein dikhayein
-        captionOutput.innerHTML = `<p style="color: red;">Ek error aa gayi: ${error.message}</p>`;
+        console.error(error);
+        captionText.textContent = `An error occurred: \n${error.message}`;
+        captionText.style.color = "#ff6b6b";
     } finally {
-        // Button ko normal state mein laayein
-        generateBtn.disabled = false;
-        generateBtn.textContent = "Caption Generate Karein";
-        generateBtn.classList.remove('loading');
+        setLoading(false);
+        captionText.style.color = "";
     }
 });
 
-// Helper function: File ko Base64 string mein badalne ke liye
+// --- NAYE MODAL KE EVENT LISTENERS ---
+
+// 4. 'i' button click karne par modal dikhayein
+infoButton.addEventListener('click', () => {
+    infoModal.style.display = 'flex'; // 'flex' use karein (kyunki CSS mein flex se center kiya hai)
+});
+
+// 5. 'x' (Close) button click karne par modal chupayein
+closeModal.addEventListener('click', () => {
+    infoModal.style.display = 'none';
+});
+
+// 6. Modal ke baahar (overlay par) click karne par modal chupayein
+infoModal.addEventListener('click', (event) => {
+    // Check karein ki click overlay par hua hai, content box par nahi
+    if (event.target === infoModal) {
+        infoModal.style.display = 'none';
+    }
+});
+
+
+// ==========================================================
+// Helper Functions
+// ==========================================================
+
+function setLoading(isLoading) {
+    generateBtn.disabled = isLoading;
+    generateBtn.classList.toggle('loading', isLoading);
+}
+
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.readAsDataURL(file);
         reader.onload = () => {
-            // "data:image/jpeg;base64," wala hissa hata dein
             const base64String = reader.result.split(',')[1];
             resolve(base64String);
         };

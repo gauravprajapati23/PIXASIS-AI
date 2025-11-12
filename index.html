@@ -3,30 +3,124 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Caption Generator</title>
+    <title>AI Caption Generator</title>
+    <link rel="icon" href="icon.jpg" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="animation.css">
 </head>
 <body>
 
-    <div class="container">
-        <h2>Image Caption Generator</h2>
-        <p>Apni image upload karein aur Gemini AI se caption paayein.</p>
+    <div id="info-button" class="floating-btn">
+        <i class="fa-solid fa-info"></i>
+    </div>
 
+    <div id="info-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span id="close-modal" class="close-btn">&times;</span>
+            <h2>About Us</h2>
+            
+            <div class="modal-cards-container">
+                
+                <div class="info-card company-card">
+                    <h4><a href="https://the-matrix-09.web.app/" target="_blank">The Matrix</a></h4>
+                    <p>
+                        Yahaan company ki detail daalein. Example: "We are dedicated to building next-generation
+                        AI tools that empower creators and businesses."
+                    </p>
+                </div>
+
+                <div class="info-card dev-card">
+                    <h4><a href="https://itsgaurav-23.web.app/" target="_blank">Gaurav Prajapati</a></h4>
+                    <p>Lead Developer</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/gaurav_prajapati_23_?igsh=OGQ5ZDc2ODk2ZA==" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://github.com/gauravprajapati23" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/gaurav-prajapati-b08505259" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="mailto: gauravprajapati041@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+
+                <div class="info-card dev-card">
+                    <h4><a href="https://pradnyatavandkar.web.app/" target="_blank">Pradnya Tavandkar</a></h4>
+                    <p>UI/UX Designer</p>
+                    <div class="social-icons">
+                        <a href="https://www.instagram.com/its_pradnya_25_?igsh=aGc2NWZ0N3hxNmtv" target="_blank" title="Instagram"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://github.com/pradnyatavandkar25" target="_blank" title="GitHub"><i class="fa-brands fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/pradnya-tavandkar-511756315?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" target="_blank" title="LinkedIn"><i class="fa-brands fa-linkedin"></i></a>
+                        <a href="mailto: pradnyatavandkar25@gmail.com" title="Email"><i class="fa-solid fa-envelope"></i></a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <section id="home-section" class="section-container">
+        
+        <h2>Welcome to PIXASIS-AI</h2>
+        
+        <img src="Banner.jpg" alt="AI Illustration" class="home-image">
+        
+        <p class="home-description">
+            Transform your images into compelling stories. PIXASIS-AI is your 
+            advanced generative AI partner, designed to instantly create smart, 
+            engaging, and professional captions for all your visual content.
+            <br><br>
+            <strong>Key Features:</strong>
+            <br>
+            &bull; <strong>Smart Image Analysis:</strong> Our AI deeply understands the context, objects, and sentiment of your image.
+            <br>
+            &bull; <strong>Custom Prompt Control:</strong> Guide the AI by providing a custom prompt. Describe the desired mood, style, or specific keywords to get the perfect caption.
+            <br>
+            &bull; <strong>Multi-Style Output:</strong> Generate everything from witty social media quips to professional, descriptive text for your blog or portfolio.
+            <br><br>
+            <strong>Benefits for You:</strong>
+            <br>
+            &bull; <strong>Save Time:</strong> Stop struggling with writer's block. Generate dozens of caption ideas in seconds.
+            <br>
+            &bull; <strong>Boost Engagement:</strong> Well-crafted captions grab attention and encourage more likes, comments, and shares.
+            <br>
+            &bull; <strong>Maintain Professionalism:</strong> Ensure your brand's voice is consistent, creative, and error-free.
+            <br><br>
+            Click "Get Started" to upload your image and experience the future of content creation.
+        </p>
+        
+        <button id="get-started-btn">
+            Get Started <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </section>
+
+    <section id="uploader-section" class="section-container">
+        <h2>PIXASIS-AI</h2>
+        
         <div class="uploader">
             <input type="file" id="image-upload" accept="image/png, image/jpeg">
-            <label for="image-upload">Image Chunein</label>
+            <label for="image-upload" class="upload-label">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span id="file-name">Click to Upload Image</span>
+            </label>
         </div>
 
         <div class="preview">
-            <img id="preview-image" src="" alt="Aapki image yahaan dikhegi">
+            <img id="preview-image" src="" alt="Your uploaded image will appear here.">
         </div>
 
-        <button id="generate-btn">Caption Generate Karein</button>
+        <div class="prompt-container">
+            <label for="prompt-input">Prompt (Optional)</label>
+            <textarea id="prompt-input" rows="3" placeholder="e.g., 'Make it sound mysterious', 'A funny caption for social media', 'Focus on the sunset'"></textarea>
+        </div>
+
+        <button id="generate-btn">
+            <span class="btn-text">Generate...</span>
+            <div class="spinner" id="spinner"></div>
+        </button>
 
         <div class="result" id="caption-output">
-            <p>Aapka caption yahaan generate hoga...</p>
+            <pre id="caption-text">Your generated caption will appear here...</pre>
         </div>
-    </div>
+    </section>
 
     <script src="script.js"></script>
 </body>

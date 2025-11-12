@@ -1,66 +1,185 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f0f2f5;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
+/* Google Font import */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
+:root {
+    --primary-color: #B273F0;
+    --dark-bg: #121212;
+    --light-bg: #1e1e1e;
+    --text-color: #f0f0f0;
+    --text-muted: #aaa;
+    --border-color: #333;
 }
 
-.container {
-    background-color: #ffffff;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 90%;
-    max-width: 500px;
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.section-container {
+    background-color: var(--light-bg);
+    padding: 30px 40px;
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 40px;
+    border-top: 5px solid var(--primary-color);
 }
 
 h2 {
-    margin-top: 0;
-    color: #333;
+    text-align: center;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #fff;
+}
+
+/* --- Home Section --- */
+#home-section {
+    text-align: center;
+}
+
+.home-image {
+    width: 100%; 
+    height: auto;
+    margin: 20px 0;
+    border-radius: 10px;
+}
+
+
+.home-description {
+    font-size: 1.1rem;
+    color: var(--text-muted);
+    margin-bottom: 30px;
+    line-height: 1.6;
+    text-align: left; /* <-- YEH NAYI LINE ADD KAREIN */
+}
+
+#get-started-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+#get-started-btn:hover {
+    background-color: #0056b3;
+    box-shadow: 0 4px 15px rgba(0, 123, 255, 0.3);
+}
+
+#get-started-btn i {
+    margin-left: 8px;
+}
+
+/* --- Uploader Section --- */
+#uploader-section {
+    display: none; /* Hide by default */
 }
 
 .uploader {
-    margin: 20px 0;
+    margin: 25px 0;
 }
 
-/* File input ko hide karein */
 #image-upload {
     display: none;
 }
 
-/* File input ke label ko button jaisa banayein */
-label[for="image-upload"] {
-    background-color: #007bff;
-    color: white;
-    padding: 10px 15px;
-    border-radius: 8px;
+.upload-label {
+    background-color: var(--dark-bg);
+    border: 2px dashed var(--primary-color);
+    border-radius: 10px;
+    padding: 30px;
     cursor: pointer;
-    font-weight: bold;
-    transition: background-color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: all 0.3s ease;
 }
 
-label[for="image-upload"]:hover {
-    background-color: #0056b3;
+.upload-label:hover {
+    background-color: #2a2a2a;
+    border-color: #fff;
+}
+
+.upload-label i {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 15px;
+}
+
+#file-name {
+    font-weight: 500;
+    color: var(--text-muted);
 }
 
 .preview {
     margin-top: 20px;
-    min-height: 100px; /* Taki khali hone par bhi jagah le */
+    min-height: 100px;
+    background: var(--dark-bg);
+    border-radius: 10px;
+    display: none;
+    padding: 10px;
+    border: 1px solid var(--border-color);
 }
 
 #preview-image {
-    max-width: 100%;
-    max-height: 300px;
+    width: 100%;
+    max-height: 350px;
     border-radius: 8px;
-    border: 2px solid #ddd;
+    object-fit: contain;
 }
 
+/* --- Prompt Box Style --- */
+.prompt-container {
+    margin-top: 25px;
+}
+
+.prompt-container label {
+    display: block;
+    text-align: left;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+#prompt-input {
+    width: 100%;
+    background-color: var(--dark-bg);
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 12px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    resize: vertical;
+}
+
+#prompt-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+/* --- Button aur Spinner --- */
 #generate-btn {
-    background-color: #28a745;
+    background-color: var(--primary-color);
     color: white;
     padding: 12px 20px;
     border: none;
@@ -68,28 +187,216 @@ label[for="image-upload"]:hover {
     font-size: 16px;
     font-weight: bold;
     cursor: pointer;
-    margin-top: 20px;
+    margin-top: 25px;
     width: 100%;
-    transition: background-color 0.3s;
+    transition: all 0.3s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    height: 48px;
 }
 
 #generate-btn:hover {
-    background-color: #218838;
+    background-color: var(--primary-color);
 }
 
-/* Loading state */
-#generate-btn.loading {
+.spinner {
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: #ffffff;
+    animation: spin 1s ease-in-out infinite;
+    display: none;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+#generate-btn.loading .spinner {
+    display: block;
+}
+
+#generate-btn.loading .btn-text {
+    display: none;
+}
+
+#generate-btn:disabled {
     background-color: #555;
     cursor: not-allowed;
 }
 
+/* --- Formatted Result Style --- */
 .result {
-    margin-top: 20px;
-    padding: 15px;
-    background-color: #f9f9f9;
-    border: 1px solid #e0e0e0;
+    margin-top: 25px;
+    background-color: var(--dark-bg);
+    border: 1px solid var(--border-color);
     border-radius: 8px;
     text-align: left;
-    min-height: 50px;
+    min-height: 100px;
+    display: none;
+}
+
+.result pre {
+    padding: 15px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    color: var(--text-color);
+    line-height: 1.7;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin: 0;
+}
+
+/* ================================== */
+/* --- NAYA 'i' BUTTON & MODAL CSS --- */
+/* ================================== */
+
+.floating-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    background-color: var(--primary-color);
+    color: white;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    z-index: 1000; /* Sabse upar */
+    transition: all 0.3s ease;
+}
+
+.floating-btn:hover {
+    background-color: #0056b3;
+    transform: scale(1.1);
+}
+
+.modal-overlay {
+    /* === YEH FIX HAI === */
+    /* Shuru mein 'none' (hide) rahega */
+    display: none; 
+    
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Black background */
+    
+    /* Jab 'display: flex;' hoga, tab yeh center karega */
+    align-items: center;
+    justify-content: center;
+    z-index: 2000; /* Button se bhi upar */
+}
+
+/* ================================== */
+/* --- MODAL CSS (Updated) --- */
+/* ================================== */
+
+.modal-content {
+    background-color: var(--light-bg);
+    padding: 30px;
+    border-radius: 10px;
+    border-top: 5px solid var(--primary-color);
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    text-align: left; /* Modal ke text ko left-align karein */
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2.5rem;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--text-color);
+}
+
+/* ================================== */
+/* --- NAYA CARD STYLES --- */
+/* ================================== */
+
+.modal-cards-container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; /* Cards ke beech gap */
+    margin-top: 20px;
+}
+
+.info-card {
+    background-color: var(--dark-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+
+.info-card h3 {
+    color: var(--primary-color);
+    margin-bottom: 10px;
+}
+
+.info-card h4 {
+    color: var(--text-color);
+    font-size: 1.2rem;
+    margin-bottom: 5px;
+}
+
+.info-card p {
+    color: var(--text-muted);
     line-height: 1.6;
+    font-size: 0.95rem;
+}
+
+.info-card h4 a {
+    color: inherit;
+    text-decoration: none;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.info-card h4 a:hover {
+    color: var(--primary-color);
+    text-decoration: none;
+    transform: scale(1.2);
+}
+
+.dev-card {
+    text-align: center; /* Developer card ka text center karein */
+}
+
+.dev-card p {
+    margin-bottom: 15px;
+    font-style: italic;
+}
+
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 20px; /* Icons ke beech gap */
+}
+
+.social-icons a {
+    color: var(--text-muted);
+    font-size: 1.8rem; /* Icon ka size */
+    transition: all 0.3s ease;
+}
+
+/* Social media icon hover colors */
+.social-icons a:hover {
+    color: var(--primary-color);
+    transform: scale(1.2); /* Thoda bada karein */
 }
