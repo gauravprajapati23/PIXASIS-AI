@@ -402,3 +402,32 @@ h2 {
     color: var(--primary-color);
     transform: scale(1.2); /* Thoda bada karein */
 }
+
+.back-btn-container {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start; /* Left mein rakhega */
+    margin-bottom: 10px;
+}
+
+#back-btn {
+    background-color: transparent;
+    color: var(--text-muted);
+    border: 1px solid var(--border-color);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Roboto', sans-serif;
+}
+
+#back-btn:hover {
+    background-color: rgba(131, 56, 236, 0.1); /* Halki purple tint */
+    color: var(--primary-color);
+    border-color: var(--primary-color);
+    transform: translateX(-5px); /* Thoda left move karega hover par */
+}

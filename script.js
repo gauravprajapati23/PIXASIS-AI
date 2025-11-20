@@ -2,16 +2,14 @@
 // ZAROORI SETTINGS
 // ==========================================================
 
-// 1. Apni NAYI API key yahaan daalein
 const API_KEY = "AIzaSyCG8i_febSjH53bImbITQxFayvG-JzcSRI";
-
-// 2. Model ka naam
 const MODEL_NAME = "gemini-2.5-flash"; 
 
 // ==========================================================
 // HTML Elements
 // ==========================================================
 const getStartedBtn = document.getElementById('get-started-btn');
+const backBtn = document.getElementById('back-btn'); // <-- Naya Back Button
 const homeSection = document.getElementById('home-section');
 const uploaderSection = document.getElementById('uploader-section');
 const imageUpload = document.getElementById('image-upload');
@@ -23,22 +21,61 @@ const resultContainer = document.querySelector('.result');
 const captionText = document.getElementById('caption-text');
 const promptInput = document.getElementById('prompt-input'); 
 
-// --- NAYE MODAL KE ELEMENTS ---
+// --- MODAL ELEMENTS ---
 const infoButton = document.getElementById('info-button');
 const infoModal = document.getElementById('info-modal');
 const closeModal = document.getElementById('close-modal');
+
+let uploadedFile = null;
+
+// ==========================================================
+// NAVIGATION FUNCTIONS (History API Logic)
+// ==========================================================
+
+// 1. Function to Show Home
+function showHome() {
+    uploaderSection.style.display = 'none';
+    homeSection.style.display = 'block';
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// 2. Function to Show Uploader
+function showUploader() {
+    homeSection.style.display = 'none';
+    uploaderSection.style.display = 'block';
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
 
 // ==========================================================
 // Event Listeners
 // ==========================================================
 
-// 1. "Get Started" Button (Show/Hide Logic)
+// 1. "Get Started" Button Click
 getStartedBtn.addEventListener('click', () => {
-    homeSection.style.display = 'none';
-    uploaderSection.style.display = 'block';
+    showUploader();
+    // Browser History mein 'uploader' state add karein
+    history.pushState({ view: 'uploader' }, "Uploader", "#upload");
 });
 
-// 2. Image Upload Logic
+// 2. Visual "Back" Button Click
+backBtn.addEventListener('click', () => {
+    // Browser ka back button trigger karein
+    history.back();
+});
+
+// 3. Browser Back Button Handler (Popstate Event)
+window.addEventListener('popstate', (event) => {
+    // Agar history state null hai (matlab Home), toh Home dikhayein
+    if (event.state && event.state.view === 'uploader') {
+        showUploader();
+    } else {
+        showHome();
+    }
+});
+
+// 4. Image Upload Logic
 imageUpload.addEventListener('change', (event) => {
     const file = event.target.files[0];
     if (file) {
@@ -57,7 +94,7 @@ imageUpload.addEventListener('change', (event) => {
     }
 });
 
-// 3. Generate Button (API Call)
+// 5. Generate Button (API Call)
 generateBtn.addEventListener('click', async () => {
     if (!uploadedFile) {
         alert("Please upload an image first!");
@@ -120,26 +157,21 @@ generateBtn.addEventListener('click', async () => {
     }
 });
 
-// --- NAYE MODAL KE EVENT LISTENERS ---
+// --- MODAL LISTENERS ---
 
-// 4. 'i' button click karne par modal dikhayein
 infoButton.addEventListener('click', () => {
-    infoModal.style.display = 'flex'; // 'flex' use karein (kyunki CSS mein flex se center kiya hai)
+    infoModal.style.display = 'flex';
 });
 
-// 5. 'x' (Close) button click karne par modal chupayein
 closeModal.addEventListener('click', () => {
     infoModal.style.display = 'none';
 });
 
-// 6. Modal ke baahar (overlay par) click karne par modal chupayein
 infoModal.addEventListener('click', (event) => {
-    // Check karein ki click overlay par hua hai, content box par nahi
     if (event.target === infoModal) {
         infoModal.style.display = 'none';
     }
 });
-
 
 // ==========================================================
 // Helper Functions
